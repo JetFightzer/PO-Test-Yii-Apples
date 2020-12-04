@@ -9,15 +9,5 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'request'=>[
-            'baseUrl'=>'/backend',
-        ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'scriptUrl'=>'/backend/index.php',
-            'rules' => [
-            ],
-        ],
     ],
 ];
