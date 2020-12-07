@@ -27,6 +27,8 @@ class Apple extends \yii\db\ActiveRecord
         parent::init();
         if ($this->isNewRecord) {
             $this->color = '#'. dechex(rand(100, 255)) . dechex(rand(100, 255)) . dechex(rand(0, 50));
+            $this->appearance_date = Carbon::createFromTimestamp(mt_rand());
+            $this->left = 100;
         }
     }
 
