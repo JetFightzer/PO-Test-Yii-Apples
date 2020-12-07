@@ -22,10 +22,10 @@ class m201204_181117_create_apples_table extends Migration
             'color'           => $this->text(),
             'appearance_date' => $this->dateTime(),
             'fall_date'       => $this->dateTime(),
-            'state'           => $this->integer(), // ref
-            'eaten'           => $this->float(),
+            // 'state'           => $this->integer(), // ref
+            'left'            => $this->float(),
         ]);
-        $this->addForeignKey('forkey_state', '{{%apple}}', 'state', '{{%apple_state}}', 'id');
+        // $this->addForeignKey('forkey_state', '{{%apple}}', 'state', '{{%apple_state}}', 'id');
     }
 
     /**
