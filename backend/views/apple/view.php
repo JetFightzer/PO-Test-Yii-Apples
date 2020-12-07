@@ -51,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'appearance_date',
             'fall_date',
             [
+                'attribute' => 'state',
                 'header' => 'State',
                 'class'  => 'yii\grid\DataColumn', // can be omitted, as it is the default
                 'value'  => function ($data) {

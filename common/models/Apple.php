@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Exception;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "apples".
@@ -14,12 +15,9 @@ use Yii;
  * @property string|null $color
  * @property string|null $appearance_date
  * @property string|null $fall_date
- * @property int|null $state
  * @property float|null $eaten
- *
- * @property AppleStates $state0
  */
-class Apple extends \yii\db\ActiveRecord
+class Apple extends ActiveRecord
 {
 
     public function init()
@@ -47,8 +45,9 @@ class Apple extends \yii\db\ActiveRecord
     {
         return [
             // [['color'], 'string'],
-            [['appearance_date'], 'safe'],
+            [['appearance_date'], 'required'],
             [['left'], 'number'],
+            [['left'], 'required'],
 
             [['fall_date'], 'default', 'value' => null, 'on' => 'insert'],
             // [['state'], 'integer'],

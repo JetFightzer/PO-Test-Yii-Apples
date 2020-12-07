@@ -45,13 +45,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'appearance_date',
             'fall_date',
             [
+                'attribute' => 'state',
                 'header' => 'State',
                 'class'  => 'yii\grid\DataColumn', // can be omitted, as it is the default
                 'value'  => function ($data) {
                     return $data->stateLabeled; // $data['name'] for array data, e.g. using SqlDataProvider.
                 },
             ],
-            'left',
+            [
+                'attribute' => 'left',
+                'value' => function($model) {
+                    return $model->left . '%';
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
