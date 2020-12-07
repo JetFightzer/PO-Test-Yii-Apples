@@ -20,13 +20,18 @@ use yii\db\ActiveRecord;
 class Apple extends ActiveRecord
 {
 
+    public function __construct($color = null) {
+        $this->color = $color;
+        parent::__construct();
+    }
+
     public function init()
     {
         parent::init();
         if ($this->isNewRecord) {
-            $this->color = '#'. dechex(rand(100, 255)) . dechex(rand(100, 255)) . dechex(rand(0, 50));
+            if(is_null($this->color)) $this->color = '#'. dechex(rand(100, 255)) . dechex(rand(100, 255)) . dechex(rand(16, 50));
             $this->appearance_date = Carbon::createFromTimestamp(mt_rand());
-            $this->left = 100;
+            $this->left = 1;
         }
     }
 
@@ -51,7 +56,7 @@ class Apple extends ActiveRecord
 
             [['fall_date'], 'default', 'value' => null, 'on' => 'insert'],
             // [['state'], 'integer'],
-            [['left'], 'default', 'value' => 100, 'on' => 'insert'],
+            [['left'], 'default', 'value' => 1, 'on' => 'insert'],
             // [['state'], 'exist', 'skipOnError' => true, 'targetClass' => AppleState::class, 'targetAttribute' => ['state' => 'id']],
         ];
     }
@@ -70,12 +75,6 @@ class Apple extends ActiveRecord
             'left'            => 'Left',
         ];
     }
-
-    public $stateLabels = [
-        'on_tree'              => 'ID',
-        'falled_down'           => 'Color',
-        'rotten'       => 'Fall Date',
-    ];
 
     public function getState()
     {
@@ -102,5 +101,24 @@ class Apple extends ActiveRecord
             'rotten'      => 'Rotten',
         ];
         return $labels[$this->getState()];
+    }
+
+    public function throw() {
+        if($this->state != 'on_tree') throw new Exception('Already thrown Apple cannot be thrown');
+        $this->fall_date = Carbon::now()->format('Y-m-d H:m:s');
+        $this->save();
+    }
+
+    public function eat($amount) {
+        if($this->state == 'on_tree') throw new Exception('Apple on the tree cannot be eaten');
+        if($this->state == 'rotten') throw new Exception('Rotten Apple cannot be eaten');
+        $left = $this->left - ($amount / 100);
+        if($left <= 0) {
+            $this->delete();
+        }
+        else {
+            $this->left = $left;
+            $this->save();
+        }
     }
 }

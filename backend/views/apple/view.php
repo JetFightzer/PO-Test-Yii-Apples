@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'left',
                 'value' => function($model) {
-                    return $model->left . '%';
+                    return ($model->left * 100) . '%';
                 }
             ],
         ],

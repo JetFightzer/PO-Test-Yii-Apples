@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use Carbon\Carbon;
+
 /**
  * AppleController implements the CRUD actions for Apple model.
  */
@@ -75,6 +77,18 @@ class AppleController extends Controller
         ]);
     }
 
+    public function actionGenerate()
+    {
+        $amount = rand(2, 5);
+
+        for($i = 0; $i < $amount; $i++) {
+            $apple = new Apple();
+            $apple->save();
+        }
+
+        return $this->redirect(['index']);
+    }
+
     /**
      * Updates an existing Apple model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -106,6 +120,23 @@ class AppleController extends Controller
     {
         $this->findModel($id)->delete();
 
+        return $this->redirect(['index']);
+    }
+    
+    public function actionThrow($id)
+    {
+        $apple = $this->findModel($id);
+        $apple->throw();
+
+        return $this->redirect(['index']);
+    }
+    
+    public function actionEat($id)
+    {
+        /* TODO: form validation */
+        $amount = Yii::$app->request->post('amount', 25);
+        $apple = $this->findModel($id);
+        $apple->eat($amount);
         return $this->redirect(['index']);
     }
 
